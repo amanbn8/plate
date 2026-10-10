@@ -1,0 +1,12 @@
+{
+  "name": "plate",
+  "version": "1.0.0",
+  "description": "Indian calorie & nutrition tracker with photo food recognition",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "mock": "MOCK=1 node server.js"
+  },
+  "engines": { "node": "22.x" }
+}
