@@ -1,7 +1,7 @@
 {
   "name": "Plate - Tracker",
   "short_name": "Plate - Tracker",
-  "description": "Indian calorie & nutrition tracker with photo food recognition",
+  "description": "Calorie & nutrition tracker with photo food recognition",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

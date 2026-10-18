@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Plate — Indian calorie &amp; nutrition tracker</title>
+<title>Plate — calorie &amp; nutrition tracker</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍽️</text></svg>">
 <link rel="manifest" href="/manifest.webmanifest">
 <meta name="theme-color" content="#121212">
@@ -541,7 +541,7 @@ svg.chart text{fill:var(--muted);font-size:10px;font-family:inherit}
     <div class="row"><button class="btn danger wide" id="logoutBtn">Log out</button></div>
   </div></section>
 
-  <p class="foot-note">Food values are typical per-serving figures for home-style recipes, based on standard Indian nutrition references. Real dishes vary with recipe and portion, so treat numbers as close estimates.</p>
+  <p class="foot-note">Food values are typical per-serving figures for home-style recipes, based on standard nutrition references. Real dishes vary with recipe and portion, so treat numbers as close estimates.</p>
 </section>
 </main>
 
@@ -2010,8 +2010,8 @@ Reply with ONLY JSON: {"code":"8901234567890"}. If no barcode digits are readabl
 
   const DB_LIST = DB.map(d => `${d.id} | ${d.name} | 1 ${d.unit.n} = ${d.unit.g} g`).join("\n");
   function mealPrompt(photo, hint, prep){
-    return `You are the food-recognition engine of an Indian calorie-tracking app.
-${photo ? "Look at the attached photo of a meal. Identify EVERY distinct food and drink visible (each roti, each bowl, rice, chutney, salad, drink). Estimate the amount on the plate in grams using visual cues: plate ~25 cm, katori ~150 g, roti ~40 g, cup ~150 ml." : "The user described what they ate. Break it into separate foods and estimate grams for each (use typical Indian home portions when unspecified). For chain items without a size, assume the usual one — a medium pizza eaten whole unless slices are mentioned, a 6-inch sub, a regular burger — and state the assumption in note."}
+    return `You are the food-recognition engine of a calorie-tracking app that covers Indian and world cuisines.
+${photo ? "Look at the attached photo of a meal. Identify EVERY distinct food and drink visible (each roti, each bowl, rice, chutney, salad, drink). Estimate the amount on the plate in grams using visual cues: plate ~25 cm, katori ~150 g, roti ~40 g, cup ~150 ml." : "The user described what they ate. Break it into separate foods and estimate grams for each (use typical home portions for that cuisine when unspecified). For chain items without a size, assume the usual one — a medium pizza eaten whole unless slices are mentioned, a 6-inch sub, a regular burger — and state the assumption in note."}
 ${hint ? "User's details (trust these over the photo): " + hint : ""}
 Cooking: ${prep.place === "Restaurant" ? "restaurant/takeaway (richer: more oil, butter, cream)" : "home-cooked"}, oil/ghee ${prep.oil.toLowerCase()}.
 
@@ -2039,11 +2039,11 @@ If there is no food at all, reply {"items":[],"note":"No food found."}`;
   function menuPrompt(hint){
     const b = budgetLeft(), aim = { lose: "losing weight", gain: "building muscle", maintain: "staying the same weight" }[S.settings.profile?.aim] || "eating well";
     const n = pending?.pages?.length || 1, left = (v, what) => v >= 0 ? `${Math.round(v)} g ${what} left` : `already ${Math.round(-v)} g over on ${what}`;
-    return `You are the nutrition coach inside an Indian calorie-tracking app. ${n > 1 ? `The ${n} attached images are pages of ONE restaurant menu (photos, delivery-app screenshots or PDF pages); consider every page together.` : "The attached image is a restaurant menu or a food-delivery app screenshot (Zomato, Swiggy, etc.)."}
+    return `You are the nutrition coach inside a calorie-tracking app that covers Indian and world cuisines. ${n > 1 ? `The ${n} attached images are pages of ONE restaurant menu (photos, delivery-app screenshots or PDF pages); consider every page together.` : "The attached image is a restaurant menu or a food-delivery app screenshot (Zomato, Swiggy, etc.)."}
 The user is choosing ${$("#meal").value.toLowerCase()} and is ${aim}.
 What they have left today: ${b.k >= 0 ? Math.round(b.k) + " kcal" : "already " + Math.round(-b.k) + " kcal over"}, ${Math.max(0, Math.round(b.p))} g protein still needed, ${left(b.c, "carbs")}, ${left(b.f, "fat")}.
 ${hint ? "User's preferences (follow these strictly): " + hint : ""}
-Pick the 3 dishes ON THIS MENU that best fit that budget and goal, favouring protein, tandoori/grilled/dry dishes and less oil, butter and cream. Only use dishes that appear on the menu. For each give a sensible single-person portion and estimate its nutrition as served at an Indian restaurant (richer than home cooking), a one-line reason it fits, and one short ordering tip (e.g. "ask for less butter", "have 1 tandoori roti instead of naan").
+Pick the 3 dishes ON THIS MENU that best fit that budget and goal, favouring protein, grilled/tandoori/dry dishes and less oil, butter and cream. Only use dishes that appear on the menu. For each give a sensible single-person portion and estimate its nutrition as served at a restaurant (richer than home cooking), a one-line reason it fits, and one short ordering tip (e.g. "ask for less butter", "have 1 tandoori roti instead of naan").
 Also list up to 2 dishes on this menu to go easy on, each with a short reason including rough calories.
 If the budget is already used up, still suggest the lightest choices and say so in the note.
 Reply with ONLY JSON:
@@ -2175,12 +2175,12 @@ Grams for nutrients, mg for sodium, 0 when not printed. If no label is readable:
     if (!sample) return;
     const k = curKey(), d = dayData(k), t = totals(d.entries), g = S.settings;
     const foods = d.entries.map(e => `${e.meal}: ${e.name}${e.portion ? " (" + e.portion + ")" : ""}, ${Math.round(num(e.calories))} kcal`).join("\n");
-    const prompt = `You are a friendly, practical nutrition coach inside an Indian calorie-tracking app.
+    const prompt = `You are a friendly, practical nutrition coach inside a calorie-tracking app that covers Indian and world cuisines.
 Log for ${k}:
 ${foods}
 Totals: ${Math.round(t.k)} kcal, protein ${Math.round(t.p)} g, carbs ${Math.round(t.c)} g, fat ${Math.round(t.f)} g, fibre ${Math.round(t.fib)} g, sugar ${Math.round(t.sug)} g of which ${Math.round(t.asug)} g added, sodium ${Math.round(t.na)} mg. Water: ${d.water} of ${g.water} glasses.
 Goals: ${g.goal} kcal, protein ${g.protein} g, carbs ${g.carbs} g, fat ${g.fat} g, fibre ${g.fiber} g, added sugar under ${g.sugar} g, sodium under ${g.sodium} mg.
-Write a short end-of-day note: at most 3 sentences, plain text, no headings, lists or emoji. Mention one thing that went well and one concrete, easy suggestion for tomorrow using everyday Indian foods. Be warm and balanced; never suggest skipping meals or eating far below the goal. If very little is logged, say the log may be incomplete.`;
+Write a short end-of-day note: at most 3 sentences, plain text, no headings, lists or emoji. Mention one thing that went well and one concrete, easy suggestion for tomorrow using everyday foods from the cuisine they eat. Be warm and balanced; never suggest skipping meals or eating far below the goal. If very little is logged, say the log may be incomplete.`;
     coachCtl = new AbortController();
     const out = $("#coachText");
     out.classList.add("muted"); out.textContent = "Thinking…";

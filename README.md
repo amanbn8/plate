@@ -1,8 +1,8 @@
-# Plate: Indian calorie & nutrition tracker
+# Plate: calorie & nutrition tracker
 
 Snap a photo of your meal. An OpenAI vision model identifies each food, estimates the grams,
-matches it to a built-in database of 348 foods and drinks spanning Indian and other major world cuisines
-(Italian, Chinese, Mexican, Japanese, Thai, Mediterranean, American, Korean) plus mocktails, cocktails, beer, wine and spirits, and logs calories,
+matches it to a built-in database of 348 foods and drinks spanning major world cuisines (Indian,
+Italian, Chinese, Mexican, Japanese, Thai, Mediterranean, American, Korean) plus mocktails, cocktails, beer, wine and spirits, and logs calories,
 protein, carbs, fat, fibre, sugar (total and added) and sodium.
 
 ## Run it
