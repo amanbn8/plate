@@ -6,3 +6,4 @@ node_modules/
 .vercel
 .env*
 .DS_Store
+brag-output*/
